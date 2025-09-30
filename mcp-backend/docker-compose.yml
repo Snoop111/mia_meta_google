@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  marketing-analytics:
+    build: .
+    container_name: marketing-analytics-mcp
+    restart: unless-stopped
+    
+    ports:
+      - "8000:8000"  # FastAPI server for OAuth
+      - "8001:8001"  # MCP server
+    
+    environment:
+      # Required Google API credentials
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_ADS_DEVELOPER_TOKEN=${GOOGLE_ADS_DEVELOPER_TOKEN}
+      
+      # Optional configuration
+      - GA4_PROPERTY_ID=${GA4_PROPERTY_ID:-}
+      - META_APP_ID=${META_APP_ID:-}
+      - META_APP_SECRET=${META_APP_SECRET:-}
+      
+      # Server configuration
+      - GOOGLE_REDIRECT_URI=http://localhost:8000/google-oauth/callback
+      - FRONTEND_URL=http://localhost:5173
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      
+    volumes:
+      # Persist credentials database
+      - ./data:/app/data
+      - ./logs:/app/logs
+      # Optional: Mount service account key file
+      - ./service-account-key.json:/app/service-account-key.json:ro
+    
+    networks:
+      - marketing-network
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Add a reverse proxy for production
+  nginx:
+    image: nginx:alpine
+    container_name: marketing-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - marketing-analytics
+    networks:
+      - marketing-network
+    profiles:
+      - production
+
+  # Optional: Database for advanced deployments
+  postgres:
+    image: postgres:15-alpine
+    container_name: marketing-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=marketing_analytics
+      - POSTGRES_USER=marketing
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-marketing_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - marketing-network
+    profiles:
+      - database
+
+volumes:
+  postgres_data:
+
+networks:
+  marketing-network:
+    driver: bridge

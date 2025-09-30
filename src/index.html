@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#111827" />
+    <title>Mia - Marketing Intelligence Agent</title>
+    <style>
+      /* Prevent iOS zoom on input focus */
+      input[type="text"], input[type="email"], input[type="password"], textarea, select {
+        font-size: 16px !important;
+      }
+      /* Prevent pull-to-refresh and fix viewport issues */
+      body {
+        overscroll-behavior-y: contain;
+        -webkit-overflow-scrolling: touch;
+        position: relative; /* Changed from fixed */
+        width: 100%;
+        min-height: 100vh; /* Changed from height: 100% */
+        margin: 0;
+        padding: 0;
+      }
+      #root {
+        width: 100%;
+        min-height: 100vh; /* Changed from height: 100% */
+        overflow-x: hidden; /* Allow vertical scroll but prevent horizontal */
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

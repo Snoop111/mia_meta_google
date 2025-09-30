@@ -1,0 +1,9 @@
+version: "2"
+authtoken: # Will use default from ngrok account
+tunnels:
+  frontend:
+    addr: 5174
+    proto: http
+  backend:
+    addr: 8001
+    proto: http

@@ -1,0 +1,19 @@
+# Only block .env files (as requested)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+mcp-backend/.env
+
+# Node modules (standard)
+node_modules/
+
+# Files with secrets that GitHub blocks
+mcp-backend/and1-signal-41ea5b72c066.json
+mcp-backend/credentials.db
+mcp-backend/deploy-droplet.sh
+mcp-backend/deploy-to-droplet.sh
+mcp-backend/app-spec.yaml
+docs/Meta-Integration-Debug-Session.md

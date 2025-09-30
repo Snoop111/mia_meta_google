@@ -1,0 +1,51 @@
+# DigitalOcean App Platform configuration
+name: marketing-analytics-mcp
+region: nyc1
+
+services:
+- name: marketing-analytics-api
+  source_dir: /
+  github:
+    repo: your-username/marketing-analytics-mcp
+    branch: main
+  run_command: python start_mcp_server.py --host 0.0.0.0 --port 8080
+  environment_slug: python
+  instance_count: 1
+  instance_size_slug: basic-s
+  
+  http_port: 8080
+  
+  routes:
+  - path: /
+    preserve_path_prefix: true
+  
+  health_check:
+    http_path: /health
+    initial_delay_seconds: 60
+    period_seconds: 30
+    timeout_seconds: 10
+    success_threshold: 1
+    failure_threshold: 3
+  
+  envs:
+  - key: GOOGLE_CLIENT_ID
+    scope: RUN_TIME
+    type: SECRET
+  - key: GOOGLE_CLIENT_SECRET
+    scope: RUN_TIME
+    type: SECRET
+  - key: GOOGLE_ADS_DEVELOPER_TOKEN
+    scope: RUN_TIME
+    type: SECRET
+  - key: GA4_PROPERTY_ID
+    scope: RUN_TIME
+    value: "YOUR_GA4_PROPERTY_ID"
+  - key: LOG_LEVEL
+    scope: RUN_TIME
+    value: "INFO"
+  - key: PYTHONPATH
+    scope: RUN_TIME
+    value: "/app"
+
+# Deploy with:
+# doctl apps create --spec digitalocean-app.yaml

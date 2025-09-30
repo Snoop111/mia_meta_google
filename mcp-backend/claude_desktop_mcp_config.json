@@ -1,0 +1,55 @@
+{
+  "mcpServers": {
+    "marketing-analytics": {
+      "command": "python3",
+      "args": ["/Users/martinstolk/Projects/Mia/brain/mcp_server.py"],
+      "env": {
+        "GOOGLE_CLIENT_ID": "${GOOGLE_CLIENT_ID}",
+        "GOOGLE_CLIENT_SECRET": "${GOOGLE_CLIENT_SECRET}",
+        "GOOGLE_ADS_DEVELOPER_TOKEN": "${GOOGLE_ADS_DEVELOPER_TOKEN}",
+        "GA4_PROPERTY_ID": "${GA4_PROPERTY_ID}",
+        "META_APP_ID": "${META_APP_ID}",
+        "META_APP_SECRET": "${META_APP_SECRET}",
+        "PYTHONPATH": "/Users/martinstolk/Projects/Mia/brain"
+      }
+    }
+  }
+}
+
+<!-- 
+To use this configuration with Claude Desktop:
+
+1. Copy this configuration to your Claude Desktop MCP settings file:
+   - macOS: ~/Library/Application Support/Claude/claude_desktop_config.json
+   - Windows: %APPDATA%\Claude\claude_desktop_config.json
+   - Linux: ~/.config/Claude/claude_desktop_config.json
+
+2. Set your actual environment variables by replacing ${VAR_NAME} with actual values:
+   - GOOGLE_CLIENT_ID: Your Google OAuth client ID
+   - GOOGLE_CLIENT_SECRET: Your Google OAuth client secret  
+   - GOOGLE_ADS_DEVELOPER_TOKEN: Your Google Ads developer token
+   - GA4_PROPERTY_ID: Your Google Analytics 4 property ID
+   - META_APP_ID: Your Meta app ID (optional)
+   - META_APP_SECRET: Your Meta app secret (optional)
+
+3. Update the path in "args" to match your actual installation path
+
+4. Restart Claude Desktop
+
+Example with actual values:
+{
+  "mcpServers": {
+    "marketing-analytics": {
+      "command": "python3",
+      "args": ["/Users/martinstolk/Projects/Mia/brain/mcp_server.py"],
+      "env": {
+        "GOOGLE_CLIENT_ID": "123456789-abc123def456.apps.googleusercontent.com",
+        "GOOGLE_CLIENT_SECRET": "GOCSPX-your_actual_secret_here",
+        "GOOGLE_ADS_DEVELOPER_TOKEN": "your_developer_token_here",
+        "GA4_PROPERTY_ID": "123456789",
+        "PYTHONPATH": "/Users/martinstolk/Projects/Mia/brain"
+      }
+    }
+  }
+}
+-->

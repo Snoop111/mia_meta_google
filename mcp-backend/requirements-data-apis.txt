@@ -1,0 +1,16 @@
+# API client dependencies for data integration
+facebook-business
+google-ads
+google-analytics-data
+google-analytics-admin
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client
+fastapi
+uvicorn[standard]
+fastmcp
+pandas
+python-multipart
+seaborn
+chardet

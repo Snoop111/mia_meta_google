@@ -1,0 +1,20 @@
+# Minimal requirements compatible with FastMCP
+fastapi>=0.115.12
+uvicorn[standard]>=0.24.0
+pandas>=2.1.0
+google-ads>=22.0.0
+google-analytics-data>=0.17.0
+google-analytics-admin>=0.22.0
+google-auth>=2.20.0
+google-auth-oauthlib>=1.0.0
+google-auth-httplib2>=0.2.0
+google-api-python-client>=2.100.0
+facebook-business>=19.0.0
+python-multipart>=0.0.6
+pydantic>=2.5.0
+httpx>=0.28.1
+aiofiles>=23.0.0
+python-dotenv>=1.0.0
+sqlalchemy>=2.0.0
+requests>=2.31.0
+fastmcp

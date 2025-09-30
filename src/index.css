@@ -1,0 +1,329 @@
+@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&display=swap');
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* iPhone 16 Pro Optimized CSS Variables */
+:root {
+  /* Exact Figma Colors - Adjusted */
+  --flow-blue: #0793F2;
+  --flow-purple: #9D81F2;
+  --flow-yellow: #FFD700; /* More golden yellow, less greenish */
+  --flow-white: #FFFFFF;
+  
+  /* Context Colors */
+  --context-blue: #A7D3FF;
+  --context-orange: #FFC5B0;
+  --context-purple: #CCC2FF;
+  --context-mint: #A2FAE0;
+  
+  /* Mia Circle Gradient */
+  --mia-inner: #FFFFFF;
+  --mia-outer: #C9F84A;
+  
+  /* iPhone 16 Pro Safe Areas */
+  --safe-top: 59px;
+  --safe-bottom: 34px;
+  --screen-width: 393px;
+  --screen-height: 852px;
+}
+
+/* Reset & iPhone 16 Pro Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Background for the fixed container */
+  background: linear-gradient(135deg, #f0f2f5 0%, #e8eaf0 100%);
+  /* Mobile touch optimizations */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  /* Prevent pull-to-refresh */
+  overscroll-behavior: contain;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Fixed iPhone 16 Pro Container - Without Status Bar */
+.iphone-container {
+  width: 393px;
+  height: 757px; /* 762px - 5px to prevent scrolling */
+  position: relative;
+  overflow: visible; /* Allow dropdowns to show outside container */
+  /* Center on all screens */
+  margin: 0 auto;
+  
+  /* Target styling from Figma */
+  border-radius: 55px;
+  background: #FFF;
+  
+  /* Center vertically on larger screens */
+  top: 50%;
+  transform: translateY(-50%);
+  
+  /* Add subtle shadow for depth */
+  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive viewport adjustments */
+@media screen and (max-width: 375px) {
+  /* iPhone SE, iPhone 12/13/14 mini */
+  .iphone-container {
+    max-width: 100vw;
+  }
+  :root {
+    --safe-top: 44px; /* Smaller notch */
+    --safe-bottom: 34px;
+  }
+}
+
+@media screen and (min-width: 414px) {
+  /* iPhone 14 Pro Max, iPhone 15 Plus */
+  :root {
+    --safe-top: 59px;
+    --safe-bottom: 34px;
+  }
+}
+
+@media screen and (min-width: 430px) {
+  /* iPhone 15 Pro Max and larger */
+  :root {
+    --safe-top: 59px;
+    --safe-bottom: 34px;
+  }
+}
+
+/* Android device support */
+@media screen and (max-width: 412px) and (max-height: 915px) {
+  /* Most Android phones */
+  :root {
+    --safe-top: 24px; /* Status bar */
+    --safe-bottom: 48px; /* Navigation bar */
+  }
+}
+
+/* Safe Area Helper Classes */
+.safe-top {
+  padding-top: var(--safe-top);
+}
+
+.safe-bottom {
+  padding-bottom: var(--safe-bottom);
+}
+
+.safe-full {
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+}
+
+/* Flowing Gradient Animation System - Organic & Soft */
+.flowing-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Soft base */
+}
+
+/* Base gradient layer - PURPLE BOOST for visibility */
+.flowing-gradient::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: -30%;
+  width: 160%;
+  height: 160%;
+  background: 
+    radial-gradient(ellipse 600px 400px at 20% 30%, var(--flow-yellow) 0%, transparent 50%),
+    radial-gradient(ellipse 500px 700px at 80% 70%, var(--flow-blue) 0%, transparent 55%),
+    radial-gradient(ellipse 500px 600px at 50% 85%, var(--flow-purple) 0%, transparent 60%),
+    radial-gradient(ellipse 400px 500px at 15% 60%, var(--flow-purple) 0%, transparent 45%),
+    radial-gradient(ellipse 350px 450px at 70% 40%, var(--flow-purple) 0%, transparent 50%);
+  filter: blur(70px);
+  opacity: 0.6;
+  animation: slowFloat1 20s ease-in-out infinite alternate;
+}
+
+/* Overlay gradient layer - PURPLE ENHANCED, no overlay blend */
+.flowing-gradient::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: 
+    radial-gradient(ellipse 400px 600px at 75% 25%, var(--flow-purple) 0%, transparent 45%),
+    radial-gradient(ellipse 450px 350px at 25% 75%, var(--flow-purple) 0%, transparent 50%),
+    radial-gradient(ellipse 500px 400px at 35% 85%, var(--flow-blue) 0%, transparent 55%),
+    radial-gradient(ellipse 300px 400px at 85% 45%, var(--flow-yellow) 0%, transparent 45%);
+  filter: blur(50px);
+  opacity: 0.5;
+  animation: slowFloat2 25s ease-in-out infinite alternate-reverse;
+  mix-blend-mode: normal;
+}
+
+/* MORE VISIBLE floating animations - increased movement */
+@keyframes slowFloat1 {
+  0% {
+    transform: translateX(-8%) translateY(-5%) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateX(6%) translateY(-10%) rotate(2deg) scale(1.1);
+  }
+  100% {
+    transform: translateX(4%) translateY(8%) rotate(-1deg) scale(0.95);
+  }
+}
+
+@keyframes slowFloat2 {
+  0% {
+    transform: translateX(6%) translateY(8%) rotate(1deg) scale(1.05);
+  }
+  50% {
+    transform: translateX(-4%) translateY(-6%) rotate(-2deg) scale(0.92);
+  }
+  100% {
+    transform: translateX(9%) translateY(3%) rotate(1.5deg) scale(1.08);
+  }
+}
+
+/* Additional floating gradient orbs for more organic movement */
+.flowing-gradient .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  pointer-events: none;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.flowing-gradient .orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--flow-yellow) 0%, transparent 80%);
+  top: 0%;
+  left: 10%;
+  filter: blur(100px);
+  opacity: 0.3;
+  animation: gentleFloat1 35s ease-in-out infinite;
+}
+
+.flowing-gradient .orb-2 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, var(--flow-blue) 0%, transparent 80%);
+  top: 40%;
+  right: 5%;
+  filter: blur(90px);
+  opacity: 0.25;
+  animation: gentleFloat2 40s ease-in-out infinite reverse;
+}
+
+.flowing-gradient .orb-3 {
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, var(--flow-purple) 0%, transparent 70%);
+  bottom: 15%;
+  left: 25%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: gentleFloat3 45s ease-in-out infinite alternate;
+}
+
+/* MORE VISIBLE orb animations - increased movement */
+@keyframes gentleFloat1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.12); }
+  100% { transform: translate(-25px, 25px) scale(0.92); }
+}
+
+@keyframes gentleFloat2 {
+  0% { transform: translate(0, 0) scale(1.02); }
+  50% { transform: translate(-35px, 45px) scale(0.88); }
+  100% { transform: translate(28px, -20px) scale(1.15); }
+}
+
+@keyframes gentleFloat3 {
+  0% { transform: translate(0, 0) scale(0.98); }
+  50% { transform: translate(-30px, -25px) scale(1.18); }
+  100% { transform: translate(38px, 22px) scale(0.95); }
+}
+
+/* Mia Green Circle Gradient */
+.mia-circle {
+  background: radial-gradient(circle, var(--mia-inner) 0%, var(--mia-outer) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Context Theme Classes */
+.context-blue { background-color: var(--context-blue); }
+.context-orange { background-color: var(--context-orange); }
+.context-purple { background-color: var(--context-purple); }
+.context-mint { background-color: var(--context-mint); }
+
+/* Smooth Transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hide scrollbars but keep functionality */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Desktop Text Selection - Allow copy/paste for desktop users */
+@media (min-width: 768px) {
+  html, body {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+  
+  /* Enable text selection for chat content, responses, and analysis */
+  .chat-message,
+  .response-text,
+  .analysis-content,
+  .creative-response,
+  .insight-text,
+  [class*="response"],
+  [class*="content"],
+  [class*="message"],
+  [class*="text"] {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+}

@@ -1,0 +1,78 @@
+{
+    "name": "marketing-analytics-mcp",
+    "version": "1.0.0",
+    "description": "Comprehensive marketing analytics MCP server",
+    "author": "Marketing Analytics Team",
+    "license": "MIT",
+    "homepage": "https://github.com/example/marketing-analytics-mcp",
+    
+    "mcp": {
+        "server": {
+            "name": "marketing-analytics",
+            "version": "1.0.0",
+            "description": "Marketing analytics tools for Google Ads, GA4, and Meta Ads",
+            "capabilities": {
+                "tools": [
+                    {
+                        "name": "comprehensive_insights",
+                        "description": "Multi-platform marketing analysis with cross-platform insights",
+                        "category": "analytics"
+                    },
+                    {
+                        "name": "campaign_analysis", 
+                        "description": "Detailed campaign performance analysis and optimization",
+                        "category": "analytics"
+                    },
+                    {
+                        "name": "setup_credentials",
+                        "description": "Configure API credentials for marketing platforms",
+                        "category": "configuration"
+                    }
+                ],
+                "prompts": [
+                    {
+                        "name": "marketing_analysis_report",
+                        "description": "Generate comprehensive marketing analysis report template",
+                        "category": "templates"
+                    }
+                ],
+                "resources": []
+            }
+        }
+    },
+    
+    "environment": {
+        "required_vars": [
+            "GOOGLE_CLIENT_ID",
+            "GOOGLE_CLIENT_SECRET",
+            "GOOGLE_ADS_DEVELOPER_TOKEN"
+        ],
+        "optional_vars": [
+            "GA4_PROPERTY_ID",
+            "META_APP_ID", 
+            "META_APP_SECRET",
+            "GOOGLE_APPLICATION_CREDENTIALS"
+        ]
+    },
+    
+    "platforms": {
+        "google_ads": {
+            "name": "Google Ads",
+            "api_version": "v14",
+            "required_scopes": ["https://www.googleapis.com/auth/adwords"],
+            "features": ["campaign_analysis", "performance_metrics", "recommendations"]
+        },
+        "google_analytics": {
+            "name": "Google Analytics 4", 
+            "api_version": "v1alpha",
+            "required_scopes": ["https://www.googleapis.com/auth/analytics.readonly"],
+            "features": ["traffic_analysis", "conversion_tracking", "audience_insights"]
+        },
+        "meta_ads": {
+            "name": "Meta Ads",
+            "api_version": "v18.0",
+            "required_permissions": ["ads_read", "business_management"],
+            "features": ["campaign_analysis", "audience_insights", "creative_analysis"]
+        }
+    }
+}

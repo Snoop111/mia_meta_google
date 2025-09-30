@@ -1,0 +1,61 @@
+# Lightweight Dockerfile for DigitalOcean deployment
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app
+
+WORKDIR /app
+
+# Install minimal system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    supervisor \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy minimal requirements
+COPY requirements-minimal.txt .
+
+# Install Python dependencies (lightweight only)
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements-minimal.txt
+
+# Copy application code
+COPY . .
+
+# Create directories
+RUN mkdir -p /app/data /app/logs /var/log/supervisor && \
+    chmod 755 /app/data /app/logs
+
+# Create supervisor config for BOTH services
+RUN cat > /etc/supervisor/conf.d/supervisord.conf << 'EOF'
+[supervisord]
+nodaemon=true
+user=root
+
+[program:fastapi]
+command=uvicorn main:app --host 0.0.0.0 --port 8080
+directory=/app
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/supervisor/fastapi.out.log
+stderr_logfile=/var/log/supervisor/fastapi.err.log
+environment=PYTHONPATH="/app"
+
+[program:mcp-server]
+command=python mcp_server.py
+directory=/app
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/supervisor/mcp.out.log
+stderr_logfile=/var/log/supervisor/mcp.err.log
+environment=PYTHONPATH="/app"
+EOF
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+EXPOSE 8080
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

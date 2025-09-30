@@ -1,0 +1,22 @@
+# Minimal requirements for deployment without heavy ML packages
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pandas==2.1.4
+google-ads==22.1.0
+google-analytics-data==0.17.1
+google-analytics-admin==0.22.0
+google-auth==2.25.2
+google-auth-oauthlib==1.2.0
+google-auth-httplib2==0.2.0
+google-api-python-client==2.112.0
+facebook-business==19.0.2
+python-multipart==0.0.6
+pydantic==2.5.2
+httpx==0.25.2
+aiofiles==23.2.1
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.0
+sqlalchemy==2.0.23
+sqlite3
+requests==2.31.0

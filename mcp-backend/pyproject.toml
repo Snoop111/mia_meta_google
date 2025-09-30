@@ -1,0 +1,103 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "marketing-analytics-mcp"
+version = "1.0.0"
+description = "Marketing Analytics MCP Server - Comprehensive insights for Google Ads, GA4, and Meta Ads"
+authors = [
+    {name = "Marketing Analytics Team", email = "analytics@example.com"}
+]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "mcp>=0.1.0",
+    "fastapi>=0.100.0",
+    "pydantic>=2.0.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "asyncio-mqtt>=0.13.0",
+    "aiofiles>=23.0.0",
+    "python-dotenv>=1.0.0",
+    "google-auth>=2.0.0",
+    "google-auth-oauthlib>=1.0.0",
+    "google-auth-httplib2>=0.2.0",
+    "google-api-python-client>=2.0.0",
+    "google-ads>=22.0.0",
+    "facebook-business>=19.0.0",
+    "sqlalchemy>=2.0.0",
+    "sqlite3-utils>=3.35.0",
+    "autogluon>=0.8.0",
+    "shap>=0.42.0",
+    "scikit-learn>=1.3.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/example/marketing-analytics-mcp"
+Repository = "https://github.com/example/marketing-analytics-mcp"
+Issues = "https://github.com/example/marketing-analytics-mcp/issues"
+
+[project.scripts]
+marketing-analytics-mcp = "mcp_server:main"
+
+[tool.setuptools]
+packages = ["analytics", "routes", "database", "credential_manager", "shared_integrator"]
+
+[tool.black]
+line-length = 100
+target-version = ['py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
